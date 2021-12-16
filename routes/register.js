@@ -1,35 +1,31 @@
 const express = require('express')
 const router = express.Router()
-const bcrypt = require('bcrypt')
-
 const db = require('../bd')
 
-//const { users, checkAuth, checkNoAuth, connection } = require('../app')
 
 router.users = []
 
+// Routes
 router.get('/', checkNoAuth, (req, res) => {
 	res.render('register')
 })
-
 router.post('/', async (req, res) => {
-	const hashPassword = await bcrypt.hash(req.body.password, 10)
 	
 	try {
-		const user = {
-			id:Date.now().toString(),
+		
+		db.query("SELECT id_u FROM `utilisateur` ORDER by id_u desc LIMIT 0,1",function (err, result) {
+			if (err) throw err
+			const user = {
+			id: result + 1,
 			email: req.body.email,
-			password: hashPassword,
+			password: req.body.password,
 			civility: req.body.civility,
 			firstName: req.body.firstName,
 			lastName: req.body.lastName,
 			birthDate: req.body.birthDate,
 			phone: req.body.phone,
 		}
-		
-		
-			db.query(
-			// "INSERT INTO `utilisateur`(`id_u`, `email`, `motdepasse`, `civilite`, `prenom`, `nom`, `datenaissance`, `telephone`, `photo`, `admin`, `dateinscription`) VALUES ('[value-1]','[value-2]','[value-3]','[value-4]','[value-5]','[value-6]','[value-7]','[value-8]','[value-9]','[value-10]','[value-11]')"
+		db.query(
 			"INSERT INTO `utilisateur`( `email`, `motdepasse`, `civilite`, `prenom`, `nom`, `datenaissance`, `telephone`) VALUES ( '" 
 				// +
 				// user.id +
@@ -52,18 +48,22 @@ router.post('/', async (req, res) => {
 				,
 			function (err, result) {
 				if (err) throw err
-				console.log(result)
+				
+				router.users.push(user)
+				
+				res.redirect('/login')
 			}
 		)
-		console.log(user)
-		router.users.push(user)
-		res.redirect('/login')
+		})
+			
+		
 	} catch (error) {
 		console.log(error)
 		res.redirect('/register')
 	}
 	
 })
+
 
 // check the no authenticated user
 function checkNoAuth(req, res, next) {
