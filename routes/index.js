@@ -2,13 +2,21 @@ const express = require('express')
 const router = express.Router()
 const expressLayouts = require('express-ejs-layouts')
 
+
 //Middlewares
 router.use(expressLayouts)
 
+
 //render home
 router.get('/', checkAuth, (req, res) => {
-	res.render('index')
+	const name = req.user.firstName
+	res.render('index', {
+		flash : req.user.admin === 1 ? 
+		"Welcom "+ name +" you are login like ADMIN":
+		name + " is a user" 
+	} )
 })
+
 
 // check the authenticated user 
 function checkAuth(req, res, next) {
