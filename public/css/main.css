@@ -74,7 +74,10 @@ body.dark {
     height: 40px;
     -webkit-user-drag: none;
     margin-right: 10px;
-    fill: var(--accent-color);
+}
+
+.local .details img path {
+    fill: var(--accent-color)
 }
 
 .local .details .address .content .text {
