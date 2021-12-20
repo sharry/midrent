@@ -55,9 +55,61 @@ body.dark {
 .local .details {
     width: 300px;
     height: 150px;
-    background: green;
 }
 
+.local .details .address {
+    width: 300px;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+}
+
+.local .details .address .content {
+    display: flex;
+    flex-direction: column;
+}
+
+.local .details img {
+    width: 40px;
+    height: 40px;
+    -webkit-user-drag: none;
+    margin-right: 10px;
+    fill: var(--accent-color);
+}
+
+.local .details .address .content .text {
+    width: 200px;
+    height: 25px;
+}
+
+.local .details .address .content .district {
+    width: 200px;
+    height: 25px;
+}
+
+
+.local .details .size-cost {
+    width: 300px;
+    height: 50px;
+    display: flex;
+}
+
+.local .details .size {
+    width: 200px;
+    height: 50px;
+    background: rgb(217, 255, 0);
+}
+
+.local .details .cost {
+    width: 100px;
+    height: 50px;
+    background: rgb(255, 0, 149);
+}
+.local .details .services {
+    width: 300px;
+    height: 50px;
+    background: blue;
+}
 
 .local .buttons {
     width: 300px;
