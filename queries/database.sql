@@ -1,20 +1,19 @@
 CREATE DATABASE MIDRENT;
 USE MIDRENT;
 CREATE TABLE IF NOT EXISTS `utilisateur` (
-    `id_u` INT NOT NULL AUTO_INCREMENT,
+    `id_u` VARCHAR(150) NOT NULL UNIQUE,
     `email` VARCHAR(100) NOT NULL UNIQUE,
-    `motdepasse` VARCHAR(50) NOT NULL,
-    `civilite` VARCHAR(5),
-    `prenom` VARCHAR(80),
-    `nom` VARCHAR(80),
-    `datenaissance` DATE,
-    `telephone` VARCHAR(10),
-    `photo` LONGBLOB,
+    `motdepasse` VARCHAR(1000) NOT NULL,
+    `civilite` VARCHAR(5) NOT NULL,
+    `prenom` VARCHAR(80) NOT NULL,
+    `nom` VARCHAR(80) NOT NULL,
+    `datenaissance` DATE NOT NULL,
+    `telephone` VARCHAR(10) NOT NULL UNIQUE,
+    `photo` VARCHAR(100),
     `admin` TINYINT DEFAULT 0,
-    `dateinscription` DATETIME NULL DEFAULT (NOW()),
+    `dateinscription` DATETIME DEFAULT (NOW()),
     PRIMARY KEY (`id_u`)
 );
-ALTER TABLE `utilisateur` AUTO_INCREMENT = 1000000;
 CREATE TABLE IF NOT EXISTS `typesignal` (
     `id_ts` INT NOT NULL AUTO_INCREMENT,
     `type` VARCHAR(100) NOT NULL,
@@ -51,13 +50,13 @@ CREATE TABLE IF NOT EXISTS `quartier` (
     FOREIGN KEY (`id_v`) REFERENCES `midrent`.`ville` (`id_v`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE IF NOT EXISTS `local` (
-    `id_l` INT NOT NULL AUTO_INCREMENT,
+    `id_l` VARCHAR(150) NOT NULL UNIQUE,
     `adresse` VARCHAR(150) NOT NULL,
     `cout` DECIMAL(10, 2) NULL,
     `effectif` INT NOT NULL,
     `id_q` INT NOT NULL,
     `id_tl` INT NOT NULL,
-    `id_u` INT NOT NULL,
+    `id_u` VARCHAR(150) NOT NULL,
     `id_r` INT NOT NULL,
     PRIMARY KEY (`id_l`),
     FOREIGN KEY (`id_q`) REFERENCES `midrent`.`quartier` (`id_q`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -65,21 +64,20 @@ CREATE TABLE IF NOT EXISTS `local` (
     FOREIGN KEY (`id_u`) REFERENCES `midrent`.`utilisateur` (`id_u`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`id_r`) REFERENCES `midrent`.`services` (`id_r`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-ALTER TABLE `local` AUTO_INCREMENT = 1000000;
 CREATE TABLE IF NOT EXISTS `image` (
     `id_i` INT NOT NULL AUTO_INCREMENT,
     `image` LONGBLOB NOT NULL,
-    `id_l` INT NOT NULL,
+    `id_l` VARCHAR(150) NOT NULL,
     PRIMARY KEY (`id_i`),
     FOREIGN KEY (`id_l`) REFERENCES `midrent`.`local` (`id_l`) ON DELETE CASCADE ON UPDATE CASCADE
 );
 CREATE TABLE IF NOT EXISTS `publication` (
-    `id_p` INT NOT NULL AUTO_INCREMENT,
+    `id_p` VARCHAR(150) NOT NULL UNIQUE,
     `titre` VARCHAR(50) NOT NULL,
     `desc_p` VARCHAR(150),
     `datecreation` DATETIME NOT NULL DEFAULT (NOW()),
-    `id_u` INT NOT NULL,
-    `id_l` INT NOT NULL,
+    `id_u` VARCHAR(150) NOT NULL,
+    `id_l` VARCHAR(150) NOT NULL,
     `id_c` INT NOT NULL,
     `invisible` TINYINT NOT NULL DEFAULT 0,
     PRIMARY KEY (`id_p`),
@@ -87,12 +85,11 @@ CREATE TABLE IF NOT EXISTS `publication` (
     FOREIGN KEY (`id_l`) REFERENCES `midrent`.`local` (`id_l`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`id_c`) REFERENCES `midrent`.`cible` (`id_c`) ON DELETE CASCADE ON UPDATE CASCADE
 );
-ALTER TABLE `publication` AUTO_INCREMENT = 1000000;
 CREATE TABLE IF NOT EXISTS `signal` (
     `id_s` INT NOT NULL AUTO_INCREMENT,
     `desc_s` VARCHAR(255) NULL,
-    `id_p` INT NOT NULL,
-    `id_u` INT NOT NULL,
+    `id_p` VARCHAR(150) NOT NULL,
+    `id_u` VARCHAR(150) NOT NULL,
     `id_ts` INT NOT NULL,
     PRIMARY KEY (`id_s`),
     FOREIGN KEY (`id_p`) REFERENCES `midrent`.`publication` (`id_p`) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -101,8 +98,8 @@ CREATE TABLE IF NOT EXISTS `signal` (
 );
 CREATE TABLE IF NOT EXISTS `sauvegarde` (
     `id_g` INT NOT NULL,
-    `id_u` INT NOT NULL,
-    `id_p` INT NOT NULL,
+    `id_u` VARCHAR(150) NOT NULL,
+    `id_p` VARCHAR(150) NOT NULL,
     PRIMARY KEY (`id_g`),
     FOREIGN KEY (`id_u`) REFERENCES `midrent`.`utilisateur` (`id_u`) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (`id_p`) REFERENCES `midrent`.`publication` (`id_p`) ON DELETE CASCADE ON UPDATE CASCADE

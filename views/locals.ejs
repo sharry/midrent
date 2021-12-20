@@ -1,0 +1,205 @@
+<%- include('./index-user.ejs', { user }) %>
+<div
+	class="alert alert-primary alert-dismissible fade show col-md-4 m-4"
+	role="alert"
+>
+	Créez vos locaux pour publier
+	<button
+		type="button"
+		class="btn-close"
+		data-bs-dismiss="alert"
+		aria-label="Close"
+	></button>
+</div>
+<div class="locals">
+	<div
+		class="add-new-local center"
+		data-bs-toggle="modal"
+		data-bs-target="#newLocalForm"
+	>
+		<svg
+			xmlns="http://www.w3.org/2000/svg"
+			width="100"
+			height="100"
+			viewBox="0 0 24 24"
+			class="icons"
+		>
+			<path d="M24 9h-9v-9h-6v9h-9v6h9v9h6v-9h9z" />
+		</svg>
+	</div>
+	<div class="local">
+		<div class="title center">Local</div>
+		<div class="details"></div>
+		<div class="buttons center">
+			<button type="button" class="btn btn-secondary">Modifier</button>
+			<button type="button" class="btn btn-primary">Publier</button>
+		</div>
+	</div>
+</div>
+
+<!-- New Local form -->
+<div
+	class="modal fade"
+	id="newLocalForm"
+	tabindex="-1"
+	aria-labelledby="newLocalFormLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="newLocalFormLabel">
+					Créer un nouveau local
+				</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<form action="/locals" method="post">
+				<div class="modal-body">
+					<div class="form-group mb-3">
+						<label for="city">Ville</label>
+						<select
+							name="city"
+							id="city"
+							class="form-select city"
+							aria-label="Disabled select example"
+							disabled
+						>
+							<% if (typeof(cities) !== "undefined"){ %> <%for(var city of
+							cities){%>
+							<option value="<%= city.city %>"><%= city.city %></option>
+							<% } %><% } %>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="districtId">Quartier</label>
+						<select
+							name="districtId"
+							id="districtId"
+							class="form-select"
+							aria-label="Default select example"
+							required
+						>
+							<% if (typeof(districts) !== "undefined"){ %> <%for(var district
+							of districts){%>
+							<option value="<%= district.id %>"><%= district.name %></option>
+							<% } %><% } %>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="address">Adresse</label>
+						<input
+							type="text"
+							name="address"
+							class="form-control"
+							id="address"
+							aria-describedby="addressHelp"
+							placeholder="Taper l'adresse du local (sans quartier et ville)"
+						/>
+					</div>
+					<div class="form-group mb-3">
+						<label for="cost">Coût</label>
+						<input
+							type="number"
+							name="cost"
+							class="form-control"
+							id="cost"
+							aria-describedby="costHelp"
+							step="50"
+							placeholder="Combien votre client doit payer par mois?"
+							min="0"
+							required
+						/>
+					</div>
+					<div class="form-group mb-3">
+						<label for="localType">Type</label>
+						<select
+							name="localType"
+							id="localType"
+							class="form-select"
+							aria-label="Default select example"
+							required
+						>
+							<option value="room">Chambre</option>
+							<option value="apartment">Appartement</option>
+							<option value="studio">Studio</option>
+							<option value="ville">Villa</option>
+							<option value="dormitory">Résidence universitaire</option>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="size">Effectif</label>
+						<input
+							type="number"
+							name="size"
+							class="form-control"
+							id="size"
+							min="1"
+							aria-describedby="sizeHelp"
+							placeholder="Combien de personnes ce local tiendra?"
+							required
+						/>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault1"
+							name="furnitureIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault1"
+							>Comprend-il des meubles</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault2"
+							name="billsIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault2"
+							>Les factures d'eau et d'électricité sont incluses</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault3"
+							name="wifiIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault3"
+							>Le Wi-Fi est disponible</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault4"
+							name="gasIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault4"
+							>Les factures de gaz sont inclus</label
+						>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-dismiss="modal"
+					>
+						Annuler
+					</button>
+					<button type="submit" class="btn btn-primary">Ajouter</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

@@ -1,9 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
-router.delete('/', (req, res) => {
+router.get('/', (req, res) => {
 	req.logout()
-    res.redirect('/login')
+	res.redirect('/')
 })
 
 module.exports = router

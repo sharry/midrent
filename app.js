@@ -1,125 +1,77 @@
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
+	require('dotenv').config()
 }
 
-
 //Modules
-
-
 const express = require('express')
 const path = require('path')
-const cors = require('cors')
-const cookieParser = require('cookie-parser')
 const logger = require('morgan')
-const mysql = require('mysql')
 const passport = require('passport')
-const initializePassport = require('./passportConfig')
-const flash = require('express-flash')
-const override = require('method-override')
-const session = require('express-session')
-const reg = require('./routes/register')
-const db = require('./bd')
+const app = express()
 
-
-require('dotenv').config()				
+// Setup relations
+require('./bootstrap')()
 
 //Init
-const app = express()
-initializePassport(
-	passport,
-	(email) =>
-		reg.users.find((user) => {
-			return user.email === email
-		}),
-	(id) => reg.users.find((user) => user.id === id)
+const sequelize = require('./config/connection')
+const session = require('express-session')
+
+// Models
+const User = require('./Models/User')
+const Publication = require('./Models/Publication')
+const Image = require('./Models/Image')
+const Local = require('./Models/Local')
+const Save = require('./Models/Save')
+const District = require('./Models/District')
+const ReportType = require('./Models/ReportType')
+const Report = require('./Models/Report')
+
+//Store session in table session in the db
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const sessionStore = new SequelizeStore({
+	db: sequelize,
+	collection: 'session',
+})
+
+//Use the session middleware
+app.use(
+	session({
+		secret: process.env.JWT_SECRET,
+		store: sessionStore,
+		resave: false,
+		saveUninitialized: true,
+		cookie: {},
+	})
 )
 
-
-db.query("SELECT `id_u`, `email`, `motdepasse`, `civilite`, `prenom`, `nom`, `datenaissance`, `telephone`, `photo`, `admin`, `dateinscription` FROM `utilisateur` WHERE 1", function (err, result) {
-	if (err) throw err;
-	result.map(u => {
-		const user = {
-			id: u.id_u,
-			email: u.email,
-			password: u.motdepasse,
-			civility: u.civilite,
-			firstName: u.prenom,
-			lastName: u.nom,
-			birthDate: u.datenaissance,
-			phone: u.telephone,
-		}
-		reg.users.push(user)
-	})
-	
-});
-
-
-
-
-// db.connect(function(err) {
-//     if (err) throw err;
-    // db.query("SELECT `id_u`, `email`, `motdepasse`, `civilite`, `prenom`, `nom`, `datenaissance`, `telephone`, `photo`, `admin`, `dateinscription` FROM `utilisateur` WHERE 1", function (err, result) {
-    //     if (err) throw err;
-    //     result.map(u => {
-	// 		const user = {
-	// 			id: u.id_u,
-	// 			email: u.email,
-	// 			password: u.motdepasse,
-	// 			civility: u.civilite,
-	// 			firstName: u.prenom,
-	// 			lastName: u.nom,
-	// 			birthDate: u.datenaissance,
-	// 			phone: u.telephone,
-	// 		}
-    //         reg.users.push(u)
-    //     })
-    //     console.log(reg.users);
-    // });
-//     console.log("Connecté à la base de données MySQL!");
-// });
-
-//Database
-// const connection = mysql.createConnection({
-// 	host: 'localhost',
-// 	user: 'root',
-// 	password: '',
-// 	database: 'midrent',
-// })
-
-
-
-// connection.connect((err) => {
-// 	if (err) throw err
-// 	console.log('connected')
-// })
+//Sync tables with the database
+sessionStore.sync()
+User.sync()
+ReportType.sync()
+District.sync()
+Local.sync()
+Image.sync()
+Publication.sync()
+Save.sync()
+Report.sync()
 
 //Middlewares
 app.use('/css', express.static(path.join(__dirname, 'public/css')))
 app.use('/img', express.static(path.join(__dirname, 'public/img')))
 app.use('/js', express.static(path.join(__dirname, 'public/js')))
-app.use(
-	cors({
-		origin: '*',
-		methods: ['GET', 'POST', 'PATCH', 'DELETE', 'PUT'],
-		allowedHeaders:
-			'Content-Type, Authorization, Origin, X-Requested-With, Accept',
-	})
-)
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-app.use(cookieParser())
-app.use(flash())
-app.use(
-	session({
-		secret: process.env.SESSION_SECRET,
-		resave: false,
-		saveUninitialized: false,
-	})
-)
+
+//Auth
+require('./auth/passport')
 app.use(passport.initialize())
 app.use(passport.session())
-app.use(override('_method'))
+// app.use((req, res, next) => {
+// 	console.log(`\n\n${req.session}\n\n`)
+// 	console.log(`\n\n${res.user}\n\n`)
+// 	next()
+// })
 
 //Routes
 app.use('/', require('./routes/index'))
@@ -130,18 +82,10 @@ app.use('/pub', require('./routes/pub'))
 app.use('/locals', require('./routes/locals'))
 app.use('/dashboard', require('./routes/dashboard'))
 app.use('/logout', require('./routes/logout'))
-app.post(
-	'/login',
-	passport.authenticate('local', {
-		successRedirect: '/',
-		failureRedirect: '/login',
-		failureFlash: true,
-	})
-)
+
 //View engine
 app.set('view engine', 'ejs')
 
 //Listener
 const port = process.env.PORT
-app.listen(port, () => console.log(`Listening on port ${port}`))
-
+app.listen(port, () => console.log(`\n\nListening on port ${port}\n\n`))

@@ -1,33 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const passport = require('passport')
-const bcrypt = require('bcrypt')
-const initializePassport = require('../passportConfig')
-const db = require('../bd')
-//Init
 
-
-
-
-router.get('/', checkNoAuth, (req, res) => {
-	res.render('login')
+router.get('/', (req, res) => {
+	if (req.isAuthenticated()) {
+		res.redirect('/')
+	} else {
+		const failedMessage = "L'email ou mot de passe est incorrect"
+		if (req.query.failed === '1') res.render('login', { failedMessage })
+		else res.render('login')
+	}
 })
 
-// router.post(
-// 	'/',checkNoAuth,
-// 	passport.authenticate('local', {
-// 		successRedirect: '/',
-// 		failureRedirect: '/login',
-// 		failureFlash: true,
-// 	})
-// )
-
-// check the no authenticated user
-function checkNoAuth(req, res, next) {
-	if (req.isAuthenticated()) {
-		return res.redirect('/')
-	}
-	next()
-}
+router.post(
+	'/',
+	passport.authenticate('local', {
+		failureRedirect: '/login?failed=1',
+		successRedirect: '/',
+	})
+)
 
 module.exports = router

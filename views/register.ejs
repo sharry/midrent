@@ -1,104 +1,160 @@
-<link
-	rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous"
-/>
-<script
-	src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-	integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-	crossorigin="anonymous"
-></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-	integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-	crossorigin="anonymous"
-></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-	integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-	crossorigin="anonymous"
-></script>
-
 <div class="container">
-	<h1>REGISTER</h1>
-	<div class="col-12">
-		<div class="col-6 offSet-3 mt-5">
+	<div class="card">
+		<div class="card-header">Créer un nouveau compte</div>
+		<div class="card-body mb-1">
+			<ul>
+				<% if (typeof(errors) !== "undefined"){ %> <%for(var error of errors){%>
+				<li style="list-style: none">
+					<div
+						class="alert alert-warning alert-dismissible fade show"
+						role="alert"
+					>
+						<%=error.msg%>
+						<button
+							type="button"
+							class="btn-close"
+							data-bs-dismiss="alert"
+							aria-label="Close"
+						></button>
+					</div>
+				</li>
+				<%}%> <%}%>
+			</ul>
 			<form action="/register" method="post">
-				<div class="form-group">
-					<label for="exampleInputEmail1">Email address</label>
+				<div class="form-group mb-3">
 					<input
 						type="email"
 						name="email"
 						class="form-control"
-						id="exampleInputEmail1"
+						id="email"
 						aria-describedby="emailHelp"
-						placeholder="Enter email"
+						placeholder="Entrer votre email"
+						value="<%= typeof email != 'undefined' ? email : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
+				<div class="form-group mb-3">
 					<input
 						type="password"
 						name="password"
 						class="form-control"
-						id="exampleInputPassword1"
-						placeholder="Password"
+						id="password"
+						placeholder="Entrer un mot de passe"
+						value="<%= typeof password != 'undefined' ? password : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Civility</label>
+				<div class="form-group mb-3">
 					<input
-						type="text"
-						name="civility"
+						type="password"
+						name="passwordConfirm"
 						class="form-control"
-						id="exampleInputPassword1"
-						placeholder="Civility"
+						id="passwordConfirm"
+						placeholder="Confirmer le mot de passe"
+						value="<%= typeof passwordConfirm != 'undefined' ? passwordConfirm : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">First name</label>
+				<div class="form-group mb-3">
+					<label for="radM">Homme</label>
+					<input type="radio" name="sex" class="radio" id="radM" value="m"
+					<%if(typeof sex != 'undefined' && sex == 'm'){%> <%="checked"%> <%}%>
+					/>
+					<label for="radMme">Femme</label>
+					<input type="radio" name="sex" class="radio" id="radF" value="f"
+					<%if(typeof sex != 'undefined' && sex == 'f'){%> <%="checked"%> <%}%>
+					/>
+				</div>
+				<div class="form-group mb-3">
 					<input
 						type="text"
 						name="firstName"
 						class="form-control"
-						id="exampleInputfirstName1"
-						placeholder="First Name"
+						id="firstname"
+						placeholder="Entrer votre prénom"
+						value="<%= typeof firstName != 'undefined' ? firstName : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Last name</label>
+				<div class="form-group mb-3">
 					<input
 						type="text"
 						name="lastName"
 						class="form-control"
-						id="exampleInputfirstName1"
-						placeholder="Last Name"
+						id="lastName"
+						placeholder="Entrer votre nom"
+						value="<%= typeof lastName != 'undefined' ? lastName : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Birth date</label>
+				<div class="form-group mb-3">
 					<input
 						type="date"
 						name="birthDate"
 						class="form-control"
-						id="exampleInputPassword1"
+						id="birthdate"
+						value="<%= typeof birthDate != 'undefined' ? birthDate : '' %>"
 					/>
 				</div>
-				<div class="form-group">
-					<label for="exampleInputPassword1">Phone</label>
+				<div class="form-group mb-3">
 					<input
 						type="text"
 						name="phone"
 						class="form-control"
-						id="exampleInputPassword1"
-						placeholder="Phone"
+						id="phone"
+						placeholder="Entrer votre numéro de téléphone"
+						value="<%= typeof phone != 'undefined' ? phone : '' %>"
 					/>
 				</div>
 
-				<button type="submit" class="btn btn-success btn-block">
-					REGISTER
+				<button
+					type="button"
+					class="btn btn-primary"
+					data-bs-toggle="modal"
+					data-bs-target="#staticBackdrop"
+				>
+					Créer mon compte
 				</button>
+				<a href="/login" class="btn btn-secondary btn-block">Se connecter</a>
+				<div
+					class="modal fade"
+					id="staticBackdrop"
+					data-bs-backdrop="static"
+					data-bs-keyboard="false"
+					tabindex="-1"
+					aria-labelledby="staticBackdropLabel"
+					aria-hidden="true"
+				>
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="staticBackdropLabel">
+									Conditions de service
+								</h5>
+								<button
+									type="button"
+									class="btn-close"
+									data-bs-dismiss="modal"
+									aria-label="Close"
+								></button>
+							</div>
+							<div class="modal-body">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+								eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+								enim ad minim veniam, quis nostrud exercitation ullamco laboris
+								nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
+								in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+								nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+								sunt in culpa qui officia deserunt mollit anim id est laborum.
+							</div>
+							<div class="modal-footer">
+								<button
+									type="button"
+									class="btn btn-secondary"
+									data-bs-dismiss="modal"
+								>
+									Fermer
+								</button>
+								<button type="submit" class="btn btn-primary">J'accepte</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>
