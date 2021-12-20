@@ -41,6 +41,7 @@ body.dark {
     display: flex;
     flex-direction: column;
     margin: 10px 15px 10px 15px;
+    position: relative;
 }
 
 .local .title {
@@ -55,6 +56,7 @@ body.dark {
 .local .details {
     width: 300px;
     height: 150px;
+    user-select: none;
 }
 
 .local .details .address {
@@ -69,15 +71,20 @@ body.dark {
     flex-direction: column;
 }
 
-.local .details img {
-    width: 40px;
-    height: 40px;
+.local-type {
+    width: 50px;
+    height: 50px;
     -webkit-user-drag: none;
     margin-right: 10px;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    padding: 5px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
-.local .details img path {
-    fill: var(--accent-color)
+
+.local-type>svg {
+    fill: var(--accent-color);
 }
 
 .local .details .address .content .text {
@@ -98,21 +105,61 @@ body.dark {
 }
 
 .local .details .size {
-    width: 200px;
     height: 50px;
-    background: rgb(217, 255, 0);
+    margin-right: 10px;
+}
+.local .details .size span {
+    height: 40px;
+    width: 40px;
+    margin-left: 10px;
+    font-size: 30px;
+    background: var(--main-color);
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+}
+.local .details .cost {
+    height: 50px;
+    display: flex;
+
 }
 
-.local .details .cost {
-    width: 100px;
-    height: 50px;
-    background: rgb(255, 0, 149);
+.local .details .cost .price {
+    font-size: 30px;
+    height: 40px;
+    padding: 0 5px 0 5px;
+    background: var(--main-color);
+    margin-left: 10px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
 }
+
+.local .details .cost sub {
+    font-size: 11px;
+    text-align: right;
+}
+
 .local .details .services {
     width: 300px;
     height: 50px;
-    background: blue;
+
 }
+
+
+.service {
+    width: 40px;
+    height: 40px;
+    -webkit-user-drag: none;
+    margin-left: 10px;
+    background: var(--main-color);
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 3px;
+}
+
+.service>svg {
+    stroke: var(--accent-color);
+}
+
 
 .local .buttons {
     width: 300px;
@@ -123,6 +170,33 @@ body.dark {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.publish {
+    width: 180px;
+}
+
+.edit {
+    position: absolute;
+    top: 15px;
+    left: 230px;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+
+}
+.edit>svg {
+    stroke: var(--accent-color);
+
+}
+
+.local:hover .edit {
+    opacity: 1;
+}
+
+nav {
+    background-color: var(--main-color);
+
 }
 
 .btn {
@@ -160,12 +234,6 @@ body.dark {
     color: #E9E9E9;
 }
 
-.type {
-    fill: var(--accent-color);
-    width: 50px;
-    height: 50px;
-}
-
 .add-new-local>svg {
     display: block;
     margin: 0 auto;
@@ -183,3 +251,4 @@ body.dark {
 .icons {
     fill: var(--accent-color);
 }
+

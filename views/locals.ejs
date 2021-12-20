@@ -31,25 +31,39 @@
 		<div class="title center">Local</div>
 		<div class="details">
 			<div class="address center">
-				<img
-					src="https://www.svgrepo.com/download/122002/spa-room.svg"
-					alt="Appartement"
-				/>
+				<div
+					class="local-type"
+					data-toggle="tooltip"
+					data-placement="bottom"
+					title="Chambre"
+				>
+					<%- include('./icons/room.ejs') %>
+				</div>
 				<div class="content">
 					<div class="text"><strong>12 Rue Salam</strong></div>
 					<div class="district">Riyad Salam</div>
 				</div>
 			</div>
-			<div class="size-cost">
-				<div class="size"></div>
-				<div class="cost"></div>
+			<div class="size-cost center">
+				<div class="size center">
+					<strong>Effectif</strong><span class="center">2</span>
+				</div>
+				<div class="cost center">
+					<strong>Coût</strong>
+					<div class="price center">550<sub>DH</sub></div>
+				</div>
 			</div>
-			<div class="services"></div>
+			<div class="services center">
+				<%- include('./icons/bills.ejs') %> <%- include('./icons/furniture.ejs')
+				%><%- include('./icons/wifi.ejs') %> <%- include('./icons/gas.ejs') %>
+			</div>
 		</div>
 		<div class="buttons center">
-			<button type="button" class="btn btn-secondary">Modifier</button>
-			<button type="button" class="btn btn-primary">Publier</button>
+			<button type="button" class="btn btn-primary publish">Publier</button>
 		</div>
+		<button type="button" class="btn btn-secondary edit center">
+			%><%- include('./icons/edit.ejs') %>
+		</button>
 	</div>
 </div>
 
@@ -74,7 +88,7 @@
 					aria-label="Close"
 				></button>
 			</div>
-			<form action="/locals" method="post">
+			<form action="/locals" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
 					<div class="form-group mb-3">
 						<label for="city">Ville</label>
@@ -203,6 +217,19 @@
 						<label class="form-check-label" for="flexSwitchCheckDefault4"
 							>Les factures de gaz sont inclus</label
 						>
+					</div>
+					<br />
+					<div class="form-check form-switch">
+						<label class="form-check-label" for="images"
+							>Télécharger des images de ce local</label
+						>
+						<input
+							type="file"
+							name="images"
+							multiple="multiple"
+							accept="image/png, image/jpeg"
+							class=""
+						/>
 					</div>
 				</div>
 				<div class="modal-footer">

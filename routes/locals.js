@@ -3,6 +3,8 @@ const router = express.Router()
 const sequelize = require('../config/connection')
 const { QueryTypes } = require('sequelize')
 const Local = require('../Models/Local')
+const Image = require('../Models/Image')
+const upload = require('../config/upload')
 
 router.get('/', async (req, res) => {
 	const user = req.user
@@ -25,13 +27,11 @@ router.get('/', async (req, res) => {
 				type: QueryTypes.SELECT,
 			}
 		)
-		console.log(locals)
 		res.render('locals', { user, cities, districts, locals })
 	} else res.redirect('/')
 })
 
-router.post('/', async (req, res) => {
-	console.log(req.body)
+router.post('/', upload.array('images', 10), async (req, res) => {
 	const {
 		districtId,
 		address,
@@ -43,7 +43,6 @@ router.post('/', async (req, res) => {
 		wifiIncluded,
 		gasIncluded,
 	} = req.body
-
 	const local = {
 		id: 'l' + Date.now().toString(),
 		address: address,
@@ -60,6 +59,16 @@ router.post('/', async (req, res) => {
 	await Local.create(local).catch((err) => {
 		console.error('Error: ', err)
 	})
+	const images = req.files
+	for (image of images) {
+		const entry = {
+			imageUrl: image.path,
+			localId: local.id,
+		}
+		await Image.create(entry).catch((err) => {
+			console.log('Error', err)
+		})
+	}
 	res.redirect('/locals')
 })
 
