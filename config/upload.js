@@ -1,13 +1,21 @@
 const multer = require('multer')
-const { join } = require('path')
+const { dirname } = require('path')
+
+const appDir = dirname(require.main.filename)
+
 const fileStorageEngine = multer.diskStorage({
 	destination: (req, file, callback) => {
-		callback(null, 'uploads/')
+		callback(null, appDir + '/uploads')
 	},
 	filename: (req, file, callback) => {
-		callback(null, Date.now() + '-' + file.originalname)
+		callback(
+			null,
+			Date.now() + '-' + file.originalname.toString().replace(/\s+/g, '')
+		)
 	},
 })
-const upload = multer({ storage: fileStorageEngine })
+const upload = multer({
+	storage: fileStorageEngine,
+})
 
 module.exports = upload

@@ -8,6 +8,7 @@
 body {
     --app-color: #1B8CFD;
     --main-color: #E9E9E9;
+    --main-mask: rgba(233, 233, 233, .8);
     --accent-color: #2E3138;
     --sinked-color: #E2E2E2;
     font-family: 'Poppins';
@@ -19,6 +20,7 @@ body {
 body.dark {
     --app-color: #1B8CFD;
     --main-color: #2E3138;
+    --main-mask: rgba(46, 49, 56, .8);
     --accent-color: #E9E9E9;
     --sinked-color: #252930;
 }
@@ -27,6 +29,7 @@ body.dark {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+
 }
 
 
@@ -43,6 +46,36 @@ body.dark {
     margin: 10px 15px 10px 15px;
     position: relative;
 }
+
+.img-responsive {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 45px;
+    z-index: 0;
+}
+
+.mask {
+    width: 100%;
+    height: 100%;
+    border-radius: 45px;
+    background-color: var(--main-mask);
+    z-index: 1;
+    opacity: .7;
+}
+
+.mask-no {
+    width: 100%;
+    height: 100%;
+    border-radius: 45px;
+    background-color: var(--main-mask);
+    z-index: 1;
+}
+
+.mask:hover {
+    opacity: 1;
+}
+
 
 .local .title {
     width: 300px;
@@ -173,24 +206,31 @@ body.dark {
 }
 
 .publish {
+    position: absolute;
+    left: 55px;
+    top: 240px;
     width: 180px;
 }
 
-.edit {
+.delete {
     position: absolute;
-    top: 15px;
-    left: 230px;
+    top: 12px;
+    left: 233px;
     width: 40px;
     height: 40px;
     opacity: 0;
-
 }
-.edit>svg {
+
+.delete>svg {
     stroke: var(--accent-color);
 
 }
 
 .local:hover .edit {
+    opacity: 1;
+}
+
+.local:hover .delete {
     opacity: 1;
 }
 

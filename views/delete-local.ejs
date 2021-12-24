@@ -1,0 +1,54 @@
+<div
+	class="modal fade"
+	id="deletelocal"
+	tabindex="-1"
+	aria-labelledby="deleteLocal"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form action="/locals/delete" method="post">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">
+						Suppression du local
+					</h5>
+					<button
+						type="button"
+						class="btn-close"
+						data-bs-dismiss="modal"
+						aria-label="Close"
+					></button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group mb-3">
+						<input
+							type="text"
+							name="localId"
+							class="form-control"
+							id="delete-localid"
+							aria-describedby="idHelp"
+							readonly
+							hidden
+						/>
+					</div>
+					<div><strong>Veuillez vraiment supprimer ce local?</strong></div>
+					<br />
+					<div>Il ne sera plus possible de restaurer ce local.</div>
+					<div>
+						Toutes les publications concernants ce local seront supprimées.
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-dismiss="modal"
+					>
+						Annuler
+					</button>
+					<button type="submit" class="btn btn-danger">Supprimer</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

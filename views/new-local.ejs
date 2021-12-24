@@ -1,0 +1,179 @@
+<div
+	class="modal fade"
+	id="newLocalForm"
+	tabindex="-1"
+	aria-labelledby="newLocalFormLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="newLocalFormLabel">
+					Créer un nouveau local
+				</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<form action="/locals" method="post" enctype="multipart/form-data">
+				<div class="modal-body">
+					<div class="form-group mb-3">
+						<label for="city">Ville</label>
+						<select
+							name="city"
+							id="city"
+							class="form-select city"
+							aria-label="Disabled select example"
+							disabled
+						>
+							<% if (typeof(cities) !== "undefined"){ %> <%for(var city of
+							cities){%>
+							<option value="<%= city.city %>"><%= city.city %></option>
+							<% } %><% } %>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="districtId">Quartier</label>
+						<select
+							name="districtId"
+							id="districtId"
+							class="form-select"
+							aria-label="Default select example"
+							required
+						>
+							<% if (typeof(districts) !== "undefined"){ %> <%for(var district
+							of districts){%>
+							<option value="<%= district.id %>"><%= district.name %></option>
+							<% } %><% } %>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="address">Adresse</label>
+						<input
+							type="text"
+							name="address"
+							class="form-control"
+							id="address"
+							aria-describedby="addressHelp"
+							placeholder="Taper l'adresse du local (sans quartier et ville)"
+						/>
+					</div>
+					<div class="form-group mb-3">
+						<label for="cost">Coût (DH/mois)</label>
+						<input
+							type="number"
+							name="cost"
+							class="form-control"
+							id="cost"
+							aria-describedby="costHelp"
+							step="50"
+							placeholder="Combien votre client doit payer par mois?"
+							min="0"
+							required
+						/>
+					</div>
+					<div class="form-group mb-3">
+						<label for="localType">Type</label>
+						<select
+							name="localType"
+							id="localType"
+							class="form-select"
+							aria-label="Default select example"
+							required
+						>
+							<option value="room">Chambre</option>
+							<option value="apartment">Appartement</option>
+							<option value="studio">Studio</option>
+							<option value="ville">Villa</option>
+							<option value="dormitory">Résidence universitaire</option>
+						</select>
+					</div>
+					<div class="form-group mb-3">
+						<label for="size">Effectif</label>
+						<input
+							type="number"
+							name="size"
+							class="form-control"
+							id="size"
+							min="1"
+							max="9"
+							aria-describedby="sizeHelp"
+							placeholder="Combien de personnes ce local tiendra?"
+							required
+						/>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault1"
+							name="furnitureIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault1"
+							>Comprend-il des meubles</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault2"
+							name="billsIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault2"
+							>Les factures d'eau et d'électricité sont incluses</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault3"
+							name="wifiIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault3"
+							>Le Wi-Fi est disponible</label
+						>
+					</div>
+					<div class="form-check form-switch">
+						<input
+							class="form-check-input"
+							type="checkbox"
+							id="flexSwitchCheckDefault4"
+							name="gasIncluded"
+						/>
+						<label class="form-check-label" for="flexSwitchCheckDefault4"
+							>Les factures de gaz sont inclus</label
+						>
+					</div>
+					<br />
+					<div class="form-check form-switch">
+						<label class="form-check-label" for="images"
+							>Télécharger des images de ce local</label
+						>
+						<input
+							type="file"
+							name="images"
+							multiple="multiple"
+							accept="image/png, image/jpeg"
+							class=""
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button
+						type="button"
+						class="btn btn-secondary"
+						data-bs-dismiss="modal"
+					>
+						Annuler
+					</button>
+					<button type="submit" class="btn btn-primary">Ajouter</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

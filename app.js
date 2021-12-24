@@ -62,23 +62,18 @@ app.use('/js', express.static(path.join(__dirname, 'public/js')))
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
-
+app.use('/uploads', express.static(__dirname + '/uploads'))
 //Auth
 require('./auth/passport')
 app.use(passport.initialize())
 app.use(passport.session())
-// app.use((req, res, next) => {
-// 	console.log(`\n\n${req.session}\n\n`)
-// 	console.log(`\n\n${res.user}\n\n`)
-// 	next()
-// })
 
 //Routes
 app.use('/', require('./routes/index'))
 app.use('/login', require('./routes/login'))
 app.use('/register', require('./routes/register'))
 app.use('/user', require('./routes/user'))
-app.use('/pub', require('./routes/pub'))
+app.use('/pub', require('./routes/publication'))
 app.use('/locals', require('./routes/locals'))
 app.use('/dashboard', require('./routes/dashboard'))
 app.use('/logout', require('./routes/logout'))
