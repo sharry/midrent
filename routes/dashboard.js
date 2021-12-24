@@ -1,17 +1,7 @@
 const express = require('express')
+const controller = require('../controllers/dashboard.controller')
 const router = express.Router()
 
-router.get('/', (req, res) => {
-	if (req.isAuthenticated()) {
-		const user = req.user
-		if (req.user.isAdmin) {
-			res.render('dashboard', { user })
-		} else {
-			res.redirect('/')
-		}
-	} else {
-		res.redirect('/')
-	}
-})
+router.get('/', controller.get)
 
 module.exports = router

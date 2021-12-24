@@ -1,8 +1,7 @@
 const express = require('express')
+const controller = require('../controllers/publication.controller')
 const router = express.Router()
 
-router.get('/', (req, res) => {
-	res.end(`<h1>Pub</h1>`)
-})
+router.get('/', controller.get)
 
 module.exports = router
