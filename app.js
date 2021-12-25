@@ -73,10 +73,11 @@ app.use('/', require('./routes/index'))
 app.use('/login', require('./routes/login'))
 app.use('/register', require('./routes/register'))
 app.use('/user', require('./routes/user'))
-app.use('/pub', require('./routes/publication'))
+app.use('/publication', require('./routes/publication'))
 app.use('/locals', require('./routes/locals'))
 app.use('/dashboard', require('./routes/dashboard'))
 app.use('/logout', require('./routes/logout'))
+app.use('/profile', require('./routes/profile'))
 
 //View engine
 app.set('view engine', 'ejs')
