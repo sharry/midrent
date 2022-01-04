@@ -17,6 +17,9 @@ module.exports = {
 		await Publication.create(pub).catch((err) => {
 			console.error('Error: ', err)
 		})
-		res.redirect(req.originalUrl.substring(0, req.originalUrl.lastIndexOf('/')))
+		res.redirect(
+			req.originalUrl.substring(0, req.originalUrl.lastIndexOf('/')) +
+				'?pub=success'
+		)
 	},
 }

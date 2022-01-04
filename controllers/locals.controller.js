@@ -37,8 +37,15 @@ module.exports = {
 					type: QueryTypes.SELECT,
 				}
 			)
-			console.log('\n\n\n', images)
-			res.render('locals', { user, cities, districts, locals, images })
+			const published = req.query.pub === 'success'
+			res.render('locals', {
+				user,
+				cities,
+				districts,
+				locals,
+				images,
+				published,
+			})
 		} else res.redirect('/')
 	},
 	post: async (req, res) => {
