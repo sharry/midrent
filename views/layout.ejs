@@ -45,11 +45,19 @@
 				$('#delete-localid').val($(event.relatedTarget).data('id'))
 			})
 
+			let rslt = []
+
 			$('#editLocalForm').on('hidden.bs.modal', (event) => {
 				$('#editfurniture').prop('checked', false)
 				$('#editwifi').prop('checked', false)
 				$('#editgas').prop('checked', false)
 				$('#editbills').prop('checked', false)
+				$('#savelocal').prop('disabled', true)
+				rslt = []
+				$('#editimages').empty()
+			})
+			$('#publishForm').on('show.bs.modal', (event) => {
+				$('#publishLocalid').val($(event.relatedTarget).data('id'))
 			})
 			$('#editLocalForm').on('show.bs.modal', (event) => {
 				$('#editlocalid').val($(event.relatedTarget).data('id'))
@@ -70,10 +78,22 @@
 				}
 				$('#editlocalType').val($(event.relatedTarget).data('localtype'))
 				$('#editdistrict').val($(event.relatedTarget).data('district'))
+				let imgs = $(event.relatedTarget).data('images').toString().split('@')
+				imgs.pop()
+				for (let img of imgs) {
+					let sub = img.split('#')
+					let obj = JSON.parse(`{"id": ${sub[0]}, "url": "${sub[1]}"}`)
+					rslt.push(obj)
+				}
+				for (let i of rslt) {
+					console.log(i)
+				}
+				// $('#editimages').val(urls)
 				const enableSaveButton = () => {
 					$('#savelocal').prop('disabled', false)
 				}
 				$('#editdistrict').change(enableSaveButton)
+				$('#editlocalType').change(enableSaveButton)
 				$('#editaddress').change(enableSaveButton)
 				$('#editcost').change(enableSaveButton)
 				$('#editsize').change(enableSaveButton)
@@ -82,6 +102,11 @@
 				$('#editwifi').change(enableSaveButton)
 				$('#editgas').change(enableSaveButton)
 				$('#editbills').change(enableSaveButton)
+				for (let im of rslt) {
+					$('#editimages').append(
+						`<div class="img"><img src="${im.url}" alt="${im.id}"/></div>`
+					)
+				}
 			})
 		</script>
 	</body>

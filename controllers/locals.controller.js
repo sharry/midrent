@@ -1,7 +1,7 @@
 const sequelize = require('../config/connection')
 const { QueryTypes } = require('sequelize')
-const Local = require('../Models/Local')
-const Image = require('../Models/Image')
+const Local = require('../models/Local')
+const Image = require('../models/Image')
 
 module.exports = {
 	get: async (req, res) => {
@@ -37,7 +37,7 @@ module.exports = {
 					type: QueryTypes.SELECT,
 				}
 			)
-
+			console.log('\n\n\n', images)
 			res.render('locals', { user, cities, districts, locals, images })
 		} else res.redirect('/')
 	},

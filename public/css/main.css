@@ -332,3 +332,22 @@ nav {
     cursor: pointer;
     border: solid 1px #BA68C8
 }
+
+.img {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    margin: 10px;
+    border-radius: 10px;
+    background-color: #682773;
+}
+
+.img img {
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+}
+
+.edit-images {
+    display: flex;
+}

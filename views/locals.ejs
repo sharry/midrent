@@ -42,9 +42,15 @@
 		data-gas="<%= local.gasIncluded %>"
 		data-localtype="<%= local.localType %>"
 		data-district="<%= local.districtId %>"
+		<% let localImages = ""
+		for (let image of images) {
+			if (image.localId === local.id) {
+				localImages += `${image.id}#${image.imageUrl}@`
+		}} %>
+		data-images = "<%= localImages %>"
 		data-bs-toggle="modal"
 		data-bs-target="#editLocalForm"
-	>
+		>
 		<% var exists = false; for(image of images) { if (images.length !== 0 &&
 		image.localId === local.id) { %>
 		<img src="<%= image.imageUrl %>" class="img-responsive" />
@@ -92,6 +98,7 @@
 				<button
 					type="button"
 					class="btn btn-primary publish"
+					data-id="<%= local.id %>"
 					data-bs-toggle="modal"
 					data-bs-target="#publishForm"
 				>
@@ -112,5 +119,6 @@
 	</div>
 
 	<%- include('./delete-local.ejs') %> <%- include('./new-local.ejs') %> <%-
-	include('./edit-local.ejs') %>
+	include('./edit-local.ejs') %> <%-
+	include('./publish.ejs') %>
 </div>

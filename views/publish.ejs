@@ -1,0 +1,90 @@
+<div
+	class="modal fade"
+	id="publishForm"
+	tabindex="-1"
+	aria-labelledby="publishFormLabel"
+	aria-hidden="true"
+>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="newLocalFormLabel">Publication</h5>
+				<button
+					type="button"
+					class="btn-close"
+					data-bs-dismiss="modal"
+					aria-label="Close"
+				></button>
+			</div>
+			<form action="/locals/publish" method="post">
+				<div class="modal-body">
+					<div class="form-group mb-3">
+						<label for="address">Titre</label>
+						<input
+							type="text"
+							name="title"
+							class="form-control"
+							id="publishTitle"
+							aria-describedby="titleHelp"
+							placeholder="Donner un titre pour votre publication"
+							required
+						/>
+					</div>
+					<div class="form-group mb-3">
+						<label for="address">Description</label>
+						<textarea
+							type="text"
+							name="description"
+							class="form-control"
+							id="publishDescription"
+							Rows="4"
+							aria-describedby="descriptionHelp"
+							placeholder="Fournir plus de détails..."
+						></textarea>
+					</div>
+					<div class="form-group mb-3">
+						<label>Cible</label>
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="target"
+								value="male"
+								id="targetMales"
+								checked
+							/>
+							<label class="form-check-label" for="targetMales">Hommes</label>
+						</div>
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="target"
+								value="female"
+								id="targetFemales"
+							/>
+							<label class="form-check-label" for="targetFemales">Femmes</label>
+						</div>
+					</div>
+					<div class="form-group mb-3">
+						<input
+							type="text"
+							name="localId"
+							class="form-control"
+							id="publishLocalid"
+							aria-describedby="idHelp"
+							required
+							readonly
+							hidden
+						/>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="submit" id="btnPublish" class="btn btn-primary">
+						Publier
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
