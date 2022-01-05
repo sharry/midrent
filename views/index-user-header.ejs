@@ -1,0 +1,38 @@
+<nav
+	class="navbar navbar-dark bg-dark mb-4"
+	style="padding: 0 70px 0 70px; height: 90px"
+>
+	<div class="container-fluid">
+		<a class="navbar-brand" href="/">
+			<img
+				src="https://raw.githubusercontent.com/sharry/midrent/main/public/img/logo.svg"
+				alt=""
+				width="60"
+				height="60"
+				class="d-inline-block align-text-buttom"
+			/>
+			midrent
+		</a>
+		<div class="dropdown">
+			<a
+				class="btn btn-secondary dropdown-toggle"
+				href="#"
+				role="button"
+				id="dropdownMenuLink"
+				data-bs-toggle="dropdown"
+				aria-expanded="false"
+			>
+				<% if (typeof(user) !== "undefined") { %> <%= user.firstName %> <% } %>
+			</a>
+
+			<ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+				<li><a class="dropdown-item" href="/profile">Profile</a></li>
+				<% if (typeof(user) !== "undefined" && user.isAdmin) { %>
+				<li><a class="dropdown-item" href="/dashboard">Tableau de bord</a></li>
+				<% } %>
+				<li><a class="dropdown-item" href="/locals">Mes locaux</a></li>
+				<li><a class="dropdown-item" href="/logout">Se déconnecter</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>
