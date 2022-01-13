@@ -1,4 +1,4 @@
-<div class="filter-bar">
+<div class="filter-bar <% if (typeof(user) !== "undefined") { %>filter-bar-mar<% } %>">
 	<div class="btn-group sort-by">
 		<button
 			class="btn btn-secondary btn-lg dropdown-toggle"
@@ -14,4 +14,31 @@
 			<li><a class="dropdown-item" href="#">Du plus cher au moins cher</a></li>
 		</ul>
 	</div>
+	<span class="lbl-filter">Filtrer</span>
+	<ion-icon
+		class="filterer"
+		id="filter-by-target"
+		name="infinite-outline"
+	></ion-icon>
+	<span class="lbl-filter">Filtrer</span>
+	<ion-icon
+		class="filterer"
+		id="filter-by-type"
+		name="infinite-outline"
+	></ion-icon>
+	<ion-icon
+		class="filterer"
+		id="filter-by-size"
+		name="infinite-outline"
+	></ion-icon>
+	<ion-icon
+		class="filterer"
+		id="filter-by-price"
+		name="infinite-outline"
+	></ion-icon>
+	<ion-icon
+		class="filterer"
+		id="filter-by-services"
+		name="infinite-outline"
+	></ion-icon>
 </div>

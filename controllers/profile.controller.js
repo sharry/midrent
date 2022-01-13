@@ -5,7 +5,14 @@ module.exports = {
 	get: (req, res) => {
 		if (req.isAuthenticated()) {
 			const user = req.user
-			res.render('profile', { user })
+			const date = new Date(user.birthDate)
+			let birthDate = date.getFullYear() + '-'
+			if (date.getMonth() + 1 < 10) birthDate += `0${date.getMonth() + 1}-`
+			else birthDate += `${date.getMonth() + 1}-`
+			if (date.getDate() < 10) birthDate += `0${date.getDate()}`
+			else birthDate += `${date.getDate()}`
+
+			res.render('profile', { user, birthDate })
 		} else {
 			res.redirect('/')
 		}

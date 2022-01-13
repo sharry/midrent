@@ -13,5 +13,6 @@
             "database": "midrent",
             "username": "root"
         }
-    ]
+    ],
+    "svg.preview.background": "editor"
 }
